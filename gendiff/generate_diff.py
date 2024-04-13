@@ -40,7 +40,7 @@ def generate_diff(json_file1, json_file2):
 
 def main():
     json_file1 = '/opt/python-project-50/tests/fixtures/file1.json'
-    json_file2 = '/opt/python-project-50/tests/fixtures/file2.json'    
+    json_file2 = '/opt/python-project-50/tests/fixtures/file2.json'
     generate_diff(json_file1, json_file2)
 
 

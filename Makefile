@@ -5,7 +5,7 @@ gendiff:
 	poetry run gendiff -h
 
 lint:
-	poetry run flake8 diff_calc
+	poetry run flake8 gendiff
 
 build:
 	poetry build
