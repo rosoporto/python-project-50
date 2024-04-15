@@ -15,32 +15,37 @@ def get_data_files(json_file1, json_file2):
 
 
 def output_data(list_results):
-    print('{')
+    output = '{\n'
     for result in list_results:
-        print(result)
-    print('}')
+        output += result + '\n'
+    output += '}'
+    return output
 
 
-def generate_diff(json_file1, json_file2):
+def generate_diff(json_file1, json_file2, to_output=True):
     dict_1, dict_2 = get_data_files(json_file1, json_file2)
     shared_keys = set(dict_1.keys() | dict_2.keys())
-    results = []
+    results_list = []
     for key in sorted(shared_keys):
         if key in dict_1 and key not in dict_2:
-            results.append(f'  - {key}: {to_str(dict_1[key])}')
+            results_list.append(f'  - {key}: {to_str(dict_1[key])}')
         elif key in dict_2 and key not in dict_1:
-            results.append(f'  + {key}: {to_str(dict_2[key])}')
+            results_list.append(f'  + {key}: {to_str(dict_2[key])}')
         elif dict_1[key] != dict_2[key]:
-            results.append(f'  - {key}: {to_str(dict_1[key])}')
-            results.append(f'  + {key}: {to_str(dict_2[key])}')
+            results_list.append(f'  - {key}: {to_str(dict_1[key])}')
+            results_list.append(f'  + {key}: {to_str(dict_2[key])}')
         else:
-            results.append(f'    {key}: {to_str(dict_1[key])}')
-    return output_data(results)
+            results_list.append(f'    {key}: {to_str(dict_1[key])}')
+    result = output_data(results_list)
+    if to_output:
+        print(result)
+    else:
+        return result
 
 
 def main():
-    json_file1 = '/opt/python-project-50/tests/fixtures/file1.json'
-    json_file2 = '/opt/python-project-50/tests/fixtures/file2.json'
+    json_file1 = 'tests/fixtures/file1.json'
+    json_file2 = 'tests/fixtures/file2.json'
     generate_diff(json_file1, json_file2)
 
 
