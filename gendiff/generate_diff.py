@@ -1,17 +1,11 @@
-import json
+#!/usr/bin/env python3
+from gendiff.file_parser import load_data
 
 
 def to_str(value):
     if type(value) is bool:
         return str(value).lower()
     return value
-
-
-def get_data_files(json_file1, json_file2):
-    with open(json_file1, 'r') as f1, open(json_file2, 'r') as f2:
-        data_f1 = json.load(f1)
-        data_f2 = json.load(f2)
-    return data_f1, data_f2
 
 
 def output_data(list_results):
@@ -23,7 +17,8 @@ def output_data(list_results):
 
 
 def generate_diff(json_file1, json_file2, to_output=True):
-    dict_1, dict_2 = get_data_files(json_file1, json_file2)
+    dict_1 = load_data(json_file1)
+    dict_2 = load_data(json_file2)
     shared_keys = set(dict_1.keys() | dict_2.keys())
     results_list = []
     for key in sorted(shared_keys):
